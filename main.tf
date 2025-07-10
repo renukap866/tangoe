@@ -75,6 +75,26 @@ resource "azurerm_virtual_machine" "vm" {
 }
 
 
+# Managed Disk for Data Disk
+resource "azurerm_managed_disk" "new_datdisk" {
+  name                 = "tangoe-datdisk"
+  location             = azurerm_resource_group.rg.location
+  resource_group_name  = azurerm_resource_group.rg.name
+  storage_account_type = "Standard_LRS"
+  disk_size_gb         = 128
+
+  create_option        = "Empty"
+}
+
+# Data Disk Attachment to Virtual Machine
+resource "azurerm_virtual_machine_data_disk_attachment" "data_disk_attachment" {
+  managed_disk_id    = azurerm_managed_disk.new_datdisk.id
+  virtual_machine_id = azurerm_virtual_machine.vm.id
+  lun                 = 0
+  caching             = "ReadWrite"
+  
+}
+
 
 
 

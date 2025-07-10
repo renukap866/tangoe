@@ -62,3 +62,16 @@ variable "vm" {
   }
 }
 
+variable "data_disk_attachment" {
+  type = object({
+    disk_size_gb = number
+  })
+  default = {
+    disk_size_gb = 128
+  }
+  
+}
+
+
+
+
